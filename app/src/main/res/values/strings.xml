@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">AssessmentProject</string>
+    <string name="filters">Filters</string>
+    <string name="not_implemented">Not Implemented</string>
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="login">login</string>
+    <string name="address">Address</string>
+    <string name="confirm_password">confirm Password</string>
+    <string name="schrijf_je_in">Schrijf je in</string>
+    <string name="inloggen">inLoggen</string>
+    <string name="user_register">User Register</string>
+    <string name="user_login">User Login</string>
+    <string name="invalid_login">Invalid Login</string>
+    <string name="password_does_not_match">Password does not match</string>
+    <string name="please_fill_the_form">Please Fill the Form</string>
+    <string name="map_view">Map View</string>
+    <string name="error_in_fetching_data">Error in fetching data</string>
+    <string name="network_not_available">network Not Available</string>
+    <string name="successfully_registered">Successfully Registered</string>
+    <string name="successfully_logged">Successfully Logged</string>
+</resources>
