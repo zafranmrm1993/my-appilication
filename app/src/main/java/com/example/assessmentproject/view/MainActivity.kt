@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -18,13 +19,14 @@ import com.example.assessmentproject.utility.Util
 import com.example.assessmentproject.viewmodel.TemperViewModel
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 
 class MainActivity : AppCompatActivity() , NetworkStateReceiver.NetworkStateReceiverListener{
     lateinit var viewModel:  TemperViewModel
     lateinit var temperListAdapter: TemperAdapter
     private var networkStateReceiver: NetworkStateReceiver? = null
-    private var DATEFILTER: String = "2021-08-14"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -32,6 +34,12 @@ class MainActivity : AppCompatActivity() , NetworkStateReceiver.NetworkStateRece
         clicks()
         initRecyclerView()
         pullToRefresh()
+    }
+
+    private fun getCurrentDate(): String{
+        val dtf: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        val now: LocalDateTime = LocalDateTime.now()
+        return dtf.format(now)
     }
 
     override fun onStart() {
@@ -62,30 +70,39 @@ class MainActivity : AppCompatActivity() , NetworkStateReceiver.NetworkStateRece
         }
 
         txtLogin.setOnClickListener {
-            startActivity(Intent(this, LogRegActivity::class.java)
-                .putExtra(Config.ISLOGIN,true))
+            startActivity(
+                Intent(this, LogRegActivity::class.java)
+                    .putExtra(Config.ISLOGIN, true)
+            )
         }
 
         txtRegistration.setOnClickListener {
-            startActivity(Intent(this, LogRegActivity::class.java)
-                .putExtra(Config.ISLOGIN,false))
+            startActivity(
+                Intent(this, LogRegActivity::class.java)
+                    .putExtra(Config.ISLOGIN, false)
+            )
         }
 
         btnOpenMapView.setOnClickListener {
-            startActivity(Intent(this, MapViewActivity::class.java)
-                .putExtra(Config.MAPDATE, Gson().toJson(temperListAdapter.temperListData)))
+            startActivity(
+                Intent(this, MapViewActivity::class.java)
+                    .putExtra(Config.MAPDATE, Gson().toJson(temperListAdapter.temperListData))
+            )
         }
     }
 
     private fun pullToRefresh(){
         sweepTemperList.setOnRefreshListener {
-            loadAPIData(DATEFILTER)
+            loadAPIData(getCurrentDate())
         }
     }
     private fun initRecyclerView(){
         temperRecyclerView.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
-            val decoration  = DividerItemDecoration(applicationContext, StaggeredGridLayoutManager.VERTICAL)
+            val decoration  = DividerItemDecoration(
+                applicationContext,
+                StaggeredGridLayoutManager.VERTICAL
+            )
             addItemDecoration(decoration)
             temperListAdapter = TemperAdapter()
             adapter =temperListAdapter
@@ -108,7 +125,7 @@ class MainActivity : AppCompatActivity() , NetworkStateReceiver.NetworkStateRece
     }
 
     override fun networkAvailable() {
-        loadAPIData(DATEFILTER)
+        loadAPIData(getCurrentDate())
     }
 
     override fun networkUnavailable() {
