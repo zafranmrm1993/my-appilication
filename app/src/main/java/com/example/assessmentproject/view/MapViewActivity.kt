@@ -3,8 +3,6 @@ package com.example.assessmentproject.view
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.assessmentproject.R
-import com.example.assessmentproject.model.Data
-import com.example.assessmentproject.utility.Config
 import com.example.assessmentproject.utility.Globals
 import com.example.assessmentproject.utility.Util
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -13,14 +11,10 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import java.lang.reflect.Type
 
 
 class MapViewActivity : AppCompatActivity() , OnMapReadyCallback{
     private var mMap: GoogleMap? = null
-    private var dateList: ArrayList<Data>? =null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map_view)
@@ -34,27 +28,18 @@ class MapViewActivity : AppCompatActivity() , OnMapReadyCallback{
             .findFragmentById(R.id.mapViewFragment) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
     }
-    //get data from MainActivity from Gson
     private fun getIntentData(){
-        val g = application as Globals
-        dateList = g.getData()
-        /*if (intent.hasExtra(Config.MAPDATE)){
-            val content = intent.extras
-            val type: Type = object : TypeToken<ArrayList<Data>?>() {}.type
-            dateList = Gson().fromJson<ArrayList<Data>?>(
-                content?.getString(Config.MAPDATE),
-                type
-            )
-        }*/
+
     }
     override fun onMapReady(p0: GoogleMap) {
         addMarker(p0)
     }
 
     private fun addMarker(p0: GoogleMap){
+        val g = application as Globals
         mMap = p0
-        if (dateList?.isNotEmpty() == true){
-            for (data in dateList!!){
+        if (g.getData()?.isNotEmpty() == true && g.getData() != null){
+            for (data in g.getData()!!){
                 mMap?.addMarker(
                     MarkerOptions().position(
                         LatLng(
