@@ -5,8 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:background="@color/white"
     tools:context=".view.MainActivity">
-
+    <!--data loading progress-->
     <ProgressBar
         android:id="@+id/temperBar"
         style="?android:attr/progressBarStyleLarge"
@@ -17,7 +18,8 @@
         app:layout_constraintStart_toStartOf="@+id/sweepTemperList"
         app:layout_constraintTop_toTopOf="@+id/sweepTemperList"
         app:layout_constraintVertical_bias="0.36" />
-
+    <!--data loading progress-->
+    <!--Swipe Refresh the Layout-->
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/sweepTemperList"
         android:layout_width="match_parent"
@@ -31,7 +33,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
+    <!--Swipe Refresh the Layout-->
+    <!--Card view for Filter Button -->
     <androidx.cardview.widget.CardView
         android:id="@+id/temperCardViewFilter"
         android:layout_width="100dp"
@@ -56,6 +59,8 @@
             android:textSize="20sp"
             android:textStyle="bold" />
     </androidx.cardview.widget.CardView>
+    <!--Card view for Filter Button -->
+    <!--bottom Contend-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -64,7 +69,7 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="12dp">
-
+        <!--button for map view-->
         <Button
             android:id="@+id/btnOpenMapView"
             android:layout_width="match_parent"
@@ -74,12 +79,14 @@
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold" />
-
+        <!--button for map view-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:weightSum="2">
+            android:weightSum="2"
+            android:baselineAligned="false">
+            <!--Register button-->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -108,6 +115,8 @@
                         android:textStyle="bold" />
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
+            <!--Register button-->
+            <!--login button-->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -135,6 +144,8 @@
                         android:textStyle="bold" />
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
+            <!--login button-->
         </LinearLayout>
     </LinearLayout>
+    <!--bottom Contend-->
 </androidx.constraintlayout.widget.ConstraintLayout>

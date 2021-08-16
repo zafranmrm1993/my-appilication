@@ -17,10 +17,7 @@ import com.example.assessmentproject.utility.Globals
 import com.example.assessmentproject.utility.NetworkStateReceiver
 import com.example.assessmentproject.utility.Util
 import com.example.assessmentproject.viewmodel.TemperViewModel
-import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 
 class MainActivity : AppCompatActivity() , NetworkStateReceiver.NetworkStateReceiverListener{
@@ -36,12 +33,6 @@ class MainActivity : AppCompatActivity() , NetworkStateReceiver.NetworkStateRece
         pullToRefresh()
     }
 
-    private fun getCurrentDate(): String{
-        val dtf: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        val now: LocalDateTime = LocalDateTime.now()
-        return dtf.format(now)
-    }
-
     override fun onStart() {
         super.onStart()
         setupNetworkStateReceiver()
@@ -51,12 +42,12 @@ class MainActivity : AppCompatActivity() , NetworkStateReceiver.NetworkStateRece
         super.onStop()
         removeNetworkStateReceiver()
     }
-
+    //remove netWork Listener
     private fun removeNetworkStateReceiver(){
         networkStateReceiver?.removeListener(this)
         unregisterReceiver(networkStateReceiver)
     }
-
+    //check Network status from Broadcast Receiver
     private fun setupNetworkStateReceiver(){
         networkStateReceiver = NetworkStateReceiver()
         networkStateReceiver?.addListener(this)
@@ -64,6 +55,7 @@ class MainActivity : AppCompatActivity() , NetworkStateReceiver.NetworkStateRece
         registerReceiver(networkStateReceiver, i)
     }
 
+    //button Event
     private fun clicks(){
         temperCardViewFilter.setOnClickListener {
             Util.showToastMessage(this, getString(R.string.not_implemented))
@@ -75,7 +67,6 @@ class MainActivity : AppCompatActivity() , NetworkStateReceiver.NetworkStateRece
                     .putExtra(Config.ISLOGIN, true)
             )
         }
-
         txtRegistration.setOnClickListener {
             startActivity(
                 Intent(this, LogRegActivity::class.java)
@@ -91,12 +82,13 @@ class MainActivity : AppCompatActivity() , NetworkStateReceiver.NetworkStateRece
             )
         }
     }
-
+    // Sweep refresh
     private fun pullToRefresh(){
         sweepTemperList.setOnRefreshListener {
-            loadAPIData(getCurrentDate())
+            loadAPIData(Util.getCurrentDate())
         }
     }
+    //setup recycle view
     private fun initRecyclerView(){
         temperRecyclerView.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
@@ -109,6 +101,7 @@ class MainActivity : AppCompatActivity() , NetworkStateReceiver.NetworkStateRece
             adapter =temperListAdapter
         }
     }
+    //Fetch data from ViewModel
     private fun loadAPIData(input: String) {
         viewModel = ViewModelProvider(this).get(TemperViewModel::class.java)
         viewModel.getTemperList().observe(this, {
@@ -122,16 +115,14 @@ class MainActivity : AppCompatActivity() , NetworkStateReceiver.NetworkStateRece
                 Util.showToastMessage(this, getString(R.string.error_in_fetching_data))
             }
         })
-        viewModel.makeApiCall(input)
+        viewModel.callTemperApi(input)
     }
-
+    //network available listener
     override fun networkAvailable() {
-        loadAPIData(getCurrentDate())
+        loadAPIData(Util.getCurrentDate())
     }
-
+    //network unavailable listener
     override fun networkUnavailable() {
         Util.showToastMessage(this, getString(R.string.network_not_available))
     }
-
-
 }

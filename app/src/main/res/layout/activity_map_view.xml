@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.MapViewActivity">
-
-
+    <!--map fragment-->
     <fragment
         android:id="@+id/mapViewFragment"
         android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -17,5 +16,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:context="com.example.assessmentproject.view.MapViewActivity" />
-
+    <!--map fragment-->
 </androidx.constraintlayout.widget.ConstraintLayout>

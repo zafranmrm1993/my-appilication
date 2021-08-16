@@ -21,25 +21,26 @@ class MapViewActivity : AppCompatActivity() , OnMapReadyCallback{
         supportActionBar?.hide()
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         setupMapView()
-        getIntentData()
     }
     private fun setupMapView(){
+        //setup the map view fragment
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.mapViewFragment) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
     }
-    private fun getIntentData(){
 
-    }
     override fun onMapReady(p0: GoogleMap) {
         addMarker(p0)
     }
-
+    //get data from Application Context and load in to map view
     private fun addMarker(p0: GoogleMap){
         val g = application as Globals
         mMap = p0
+        //data amiability checking
         if (g.getData()?.isNotEmpty() == true && g.getData() != null){
+            //data iteration
             for (data in g.getData()!!){
+                //adding maker list
                 mMap?.addMarker(
                     MarkerOptions().position(
                         LatLng(
@@ -52,6 +53,7 @@ class MapViewActivity : AppCompatActivity() , OnMapReadyCallback{
                         )
                     )
                 )
+                // map focusing
                 mMap?.animateCamera(
                     CameraUpdateFactory.newLatLng(
                         LatLng(

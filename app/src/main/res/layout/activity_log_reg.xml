@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".view.LogRegActivity"
     android:orientation="vertical">
 
-    <!--login-->
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view_list"
         android:layout_width="match_parent"
@@ -33,7 +33,7 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             >
-
+            <!--contend-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:layout_editor_absoluteX="16dp">
-
+                <!--heading-->
                 <TextView
                     android:id="@+id/txtTitle"
                     android:textSize="20sp"
@@ -51,17 +51,18 @@
                     android:textStyle="bold"
                     android:textColor="@color/black"
                     android:gravity="center_horizontal"/>
-
+                <!--heading-->
                 <!--username-->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textInputLayoutUsername"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColorHint="@color/black"
+                    android:textColorHint="@color/purple_200"
                     android:padding="10dp"
                     tools:layout_editor_absoluteX="16dp">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:background="@color/white"
                         android:id="@+id/editTxtUsername"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -69,48 +70,55 @@
                         android:inputType="textEmailAddress"
                         android:textColor="@color/black" />
                 </com.google.android.material.textfield.TextInputLayout>
-
+                <!--username-->
                 <!--Address-->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textInputLayoutAddress"
                     android:padding="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColorHint="@color/black">
+                    android:textColorHint="@color/purple_200">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/editTxtAddress"
+                        android:background="@color/white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/address"
                         android:inputType="textEmailAddress"
                         android:textColor="@color/black" />
                 </com.google.android.material.textfield.TextInputLayout>
+                <!--Address-->
                 <!--Password-->
                 <com.google.android.material.textfield.TextInputLayout
                     android:padding="10dp"
                     android:id="@+id/textInputLayoutPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColorHint="@color/purple_200"
+                    app:passwordToggleTint="@color/purple_200"
                     app:passwordToggleEnabled="true"
                     tools:layout_editor_absoluteX="10dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/editTxtPassword"
                         android:layout_width="match_parent"
+                        android:background="@color/white"
                         android:layout_height="wrap_content"
                         android:hint="@string/password"
                         android:inputType="textPassword"
                         android:textColor="@color/black" />
 
                 </com.google.android.material.textfield.TextInputLayout>
-
+                <!--Password-->
                 <!--Con Password-->
                 <com.google.android.material.textfield.TextInputLayout
                     android:padding="10dp"
                     android:id="@+id/textInputLayoutConPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColorHint="@color/purple_200"
+                    app:passwordToggleTint="@color/purple_200"
                     app:passwordToggleEnabled="true"
                     tools:layout_editor_absoluteX="10dp">
 
@@ -119,26 +127,23 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/confirm_password"
+                        android:background="@color/white"
                         android:inputType="textPassword"
                         android:textColor="@color/black" />
 
                 </com.google.android.material.textfield.TextInputLayout>
-
-
+                <!--Con Password-->
+                <!--Login Button-->
                 <Button
                     android:layout_gravity="center_horizontal"
                     android:id="@+id/btnLoginReg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/login" />
-
+                <!--Login Button-->
             </LinearLayout>
-
+            <!--contend-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
-    <!--login-->
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

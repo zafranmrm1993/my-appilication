@@ -11,27 +11,22 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 class TemperViewModel : ViewModel() {
-    private lateinit var temperList: MutableLiveData<TemperListModel>
-
-    init {
-        temperList = MutableLiveData()
-    }
-
+    private var temperList: MutableLiveData<TemperListModel> = MutableLiveData()
+    //get temper list
     fun getTemperList(): MutableLiveData<TemperListModel>{
         return temperList
     }
-
-    fun makeApiCall(query: String) {
-
+    // make api call
+    fun callTemperApi(query: String) {
         val retroInstance  = RetrofitInstance.getRetroInstance().create(RetroService::class.java)
         retroInstance.getTemperListFromApi(query)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(getBookListObserverRx())
+            .subscribe(getTemperDataListListObserverRx())
     }
 
-
-    private fun getBookListObserverRx(): Observer<TemperListModel> {
+    //get temper data list from ObserverRx
+    private fun getTemperDataListListObserverRx(): Observer<TemperListModel> {
         return object : Observer<TemperListModel> {
             override fun onComplete() {
                 //hide progress indicator .

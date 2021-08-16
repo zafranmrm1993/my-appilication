@@ -4,7 +4,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.assessmentproject.R
 import com.example.assessmentproject.model.User
@@ -21,6 +20,11 @@ class LogRegActivity : AppCompatActivity() {
         setContentView(R.layout.activity_log_reg)
         supportActionBar?.hide()
         setupPreference()
+        viewSetup()
+        clicks()
+    }
+    //set the view from intend
+    private fun viewSetup(){
         if (intent.hasExtra(Config.ISLOGIN)){
             if (intent.getBooleanExtra(Config.ISLOGIN,true)){
                 loginView()
@@ -30,11 +34,11 @@ class LogRegActivity : AppCompatActivity() {
         }else{
             setupTheContendView()
         }
-        clicks()
+
     }
     //load Shared Preference object
     private fun setupPreference(){
-        pref = getSharedPreferences(Config.APP_PRE_NAME, MODE_PRIVATE);
+        getSharedPreferences(Config.APP_PRE_NAME, MODE_PRIVATE).also { pref = it }
     }
 
     //setup contend
@@ -47,7 +51,7 @@ class LogRegActivity : AppCompatActivity() {
             registerView()
         }
     }
-
+    //change the view for register
     private fun registerView(){
         txtTitle.text = getString(R.string.user_register)
         textInputLayoutUsername.visibility = View.VISIBLE
@@ -56,7 +60,7 @@ class LogRegActivity : AppCompatActivity() {
         textInputLayoutConPassword.visibility = View.VISIBLE
         btnLoginReg.text = Config.REGISTER
     }
-
+    //change the view for login
     private fun loginView(){
         txtTitle.text = getString(R.string.user_login)
         textInputLayoutUsername.visibility = View.VISIBLE
@@ -65,23 +69,26 @@ class LogRegActivity : AppCompatActivity() {
         textInputLayoutConPassword.visibility = View.GONE
         btnLoginReg.text = Config.LOGIN
     }
-
+    //clicks events
     private fun clicks(){
         var message : String? =""
         btnLoginReg.setOnClickListener {
-            var userObj :User? = Util.getRegistrationDetails(pref)
+            val userObj :User? = Util.getRegistrationDetails(pref)
             if (btnLoginReg.text == Config.LOGIN){
+                //login function
                 if (editTxtUsername.text.toString() == userObj?.name
-                    && editTxtPassword.text.toString() == userObj?.password){
+                    && editTxtPassword.text.toString() == userObj.password
+                ){
                     message = getString(R.string.successfully_logged)
                     startActivity(Intent(this@LogRegActivity, MainActivity::class.java))
                 }else{
                     message = getString(R.string.invalid_login)
                 }
             }else if (btnLoginReg.text ==  Config.REGISTER){
+                //registration function
                 if (validation()){
                     message = if (editTxtPassword.text.toString() == editTxtConPassword.text.toString()){
-                        var userDetails = User(
+                        val userDetails = User(
                             editTxtUsername.text.toString(),
                             editTxtPassword.text.toString(),
                             editTxtAddress.text.toString()
@@ -101,14 +108,14 @@ class LogRegActivity : AppCompatActivity() {
             message?.let { it1 -> Util.showToastMessage(this, it1) }
         }
     }
-
+    //field validation
     private fun validation():Boolean{
         return editTxtUsername.text.toString().isNotEmpty() &&
                 editTxtPassword.text.toString().isNotEmpty() &&
         editTxtAddress.text.toString().isNotEmpty() &&
         editTxtConPassword.text.toString().isNotEmpty()
     }
-
+    //clear field
     private fun clearTheData(){
         editTxtUsername.setText("")
         editTxtPassword.setText("")
