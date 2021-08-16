@@ -6,7 +6,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitInstance {
-    //one retro fit object creation for project
+    //one retrofit object creation for project
     companion object{
         fun getRetroInstance() : Retrofit {
             return Retrofit.Builder()
