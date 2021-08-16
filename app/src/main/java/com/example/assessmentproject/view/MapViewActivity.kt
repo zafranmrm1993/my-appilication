@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.assessmentproject.R
 import com.example.assessmentproject.model.Data
 import com.example.assessmentproject.utility.Config
+import com.example.assessmentproject.utility.Globals
 import com.example.assessmentproject.utility.Util
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -26,7 +27,7 @@ class MapViewActivity : AppCompatActivity() , OnMapReadyCallback{
         supportActionBar?.hide()
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         setupMapView()
-        getData()
+        getIntentData()
     }
     private fun setupMapView(){
         val mapFragment = supportFragmentManager
@@ -34,14 +35,17 @@ class MapViewActivity : AppCompatActivity() , OnMapReadyCallback{
         mapFragment?.getMapAsync(this)
     }
     //get data from MainActivity from Gson
-    private fun getData(){
-        if (intent.hasExtra(Config.MAPDATE)){
+    private fun getIntentData(){
+        val g = application as Globals
+        dateList = g.getData()
+        /*if (intent.hasExtra(Config.MAPDATE)){
+            val content = intent.extras
             val type: Type = object : TypeToken<ArrayList<Data>?>() {}.type
             dateList = Gson().fromJson<ArrayList<Data>?>(
-                intent.getStringExtra(Config.MAPDATE),
+                content?.getString(Config.MAPDATE),
                 type
             )
-        }
+        }*/
     }
     override fun onMapReady(p0: GoogleMap) {
         addMarker(p0)
@@ -63,13 +67,17 @@ class MapViewActivity : AppCompatActivity() , OnMapReadyCallback{
                         )
                     )
                 )
-                mMap?.animateCamera(CameraUpdateFactory.newLatLng(LatLng(
-                    data.job.report_at_address.geo.lat,
-                    data.job.report_at_address.geo.lon
-                )))
+                mMap?.animateCamera(
+                    CameraUpdateFactory.newLatLng(
+                        LatLng(
+                            data.job.report_at_address.geo.lat,
+                            data.job.report_at_address.geo.lon
+                        )
+                    )
+                )
             }
         }
-        mMap?.setMaxZoomPreference(12f)
+        //mMap?.setMaxZoomPreference(12f)
     }
 
 }

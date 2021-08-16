@@ -4,7 +4,6 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -14,6 +13,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.assessmentproject.R
 import com.example.assessmentproject.adapters.TemperAdapter
 import com.example.assessmentproject.utility.Config
+import com.example.assessmentproject.utility.Globals
 import com.example.assessmentproject.utility.NetworkStateReceiver
 import com.example.assessmentproject.utility.Util
 import com.example.assessmentproject.viewmodel.TemperViewModel
@@ -84,9 +84,12 @@ class MainActivity : AppCompatActivity() , NetworkStateReceiver.NetworkStateRece
         }
 
         btnOpenMapView.setOnClickListener {
+            val g = application as Globals
+            g.setData(temperListAdapter.temperListData)
+            /*val dataBundle = Bundle()
+            dataBundle.putString(Config.MAPDATE, Gson().toJson(temperListAdapter.temperListData))*/
             startActivity(
                 Intent(this, MapViewActivity::class.java)
-                    .putExtra(Config.MAPDATE, Gson().toJson(temperListAdapter.temperListData))
             )
         }
     }
