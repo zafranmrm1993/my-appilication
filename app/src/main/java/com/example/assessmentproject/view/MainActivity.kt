@@ -86,8 +86,6 @@ class MainActivity : AppCompatActivity() , NetworkStateReceiver.NetworkStateRece
         btnOpenMapView.setOnClickListener {
             val g = application as Globals
             g.setData(temperListAdapter.temperListData)
-            /*val dataBundle = Bundle()
-            dataBundle.putString(Config.MAPDATE, Gson().toJson(temperListAdapter.temperListData))*/
             startActivity(
                 Intent(this, MapViewActivity::class.java)
             )
